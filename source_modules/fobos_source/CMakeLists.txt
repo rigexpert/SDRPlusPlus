@@ -6,7 +6,7 @@
 #==============================================================================
 
 cmake_minimum_required(VERSION 3.13)
-project(fobos_sourse)
+project(fobos_source)
 
 file(GLOB SRC "src/*.cpp")
 
@@ -14,17 +14,17 @@ include(${SDRPP_MODULE_CMAKE})
 
 if (MSVC)
     # Lib path
-    target_link_directories(fobos_sourse PRIVATE "C:/Program Files/PothosSDR/bin/")
+    target_link_directories(fobos_source PRIVATE "C:/Program Files/PothosSDR/bin/")
 
-    target_include_directories(fobos_sourse PUBLIC "C:/Program Files/PothosSDR/include/libfobos/")
+    target_include_directories(fobos_source PUBLIC "C:/Program Files/PothosSDR/include/libfobos/")
 
-    target_link_libraries(fobos_sourse PRIVATE fobos)
+    target_link_libraries(fobos_source PRIVATE fobos)
 elseif (ANDROID)
-    target_include_directories(fobos_sourse PUBLIC
+    target_include_directories(fobos_source PUBLIC
         /sdr-kit/${ANDROID_ABI}/include/libfobos
     )
 
-    target_link_libraries(fobos_sourse PUBLIC
+    target_link_libraries(fobos_source PUBLIC
         /sdr-kit/${ANDROID_ABI}/lib/libusb1.0.so
         /sdr-kit/${ANDROID_ABI}/lib/libfobos.so
     )
@@ -33,13 +33,13 @@ else (MSVC)
 
     pkg_check_modules(LIBFOBOS REQUIRED libfobos)
 
-    target_include_directories(fobos_sourse PRIVATE ${LIBFOBOS_INCLUDE_DIRS})
-    target_link_directories(fobos_sourse PRIVATE ${LIBFOBOS_LIBRARY_DIRS})
-    target_link_libraries(fobos_sourse PRIVATE ${LIBFOBOS_LIBRARIES})
+    target_include_directories(fobos_source PRIVATE ${LIBFOBOS_INCLUDE_DIRS})
+    target_link_directories(fobos_source PRIVATE ${LIBFOBOS_LIBRARY_DIRS})
+    target_link_libraries(fobos_source PRIVATE ${LIBFOBOS_LIBRARIES})
 
     # Include it because for some reason pkgconfig doesn't look here?
     if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        target_include_directories(fobos_sourse PRIVATE "/usr/local/include")
+        target_include_directories(fobos_source PRIVATE "/usr/local/include")
     endif()
     
 endif ()
